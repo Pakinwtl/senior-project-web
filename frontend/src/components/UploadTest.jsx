@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../styles/UploadTest.css";
 
 function UploadTest({ onResults }) {
   const [file, setFile] = useState(null);
@@ -35,22 +36,31 @@ function UploadTest({ onResults }) {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="upload-form">
-      <h2>Upload Excel File</h2>
-      <input
-        type="file"
-        accept=".xlsx"
-        onChange={(e) => setFile(e.target.files[0])}
-        required
-      />
-      <select onChange={(e) => setUseModel(e.target.value === "true")}>
-        <option value="true">AI Model</option>
-        <option value="false">Algorithm</option>
-      </select>
-      <button type="submit" disabled={loading}>
-        {loading ? "Analyzing..." : "Detect Trend"}
-      </button>
-    </form>
+    <div className="upload-container">
+      <form onSubmit={handleSubmit} className="upload-form">
+        <h2>Upload Excel File</h2>
+        <input
+          type="file"
+          accept=".xlsx"
+          onChange={(e) => setFile(e.target.files[0])}
+          required
+        />
+        <select
+          value={useModel}
+          onChange={(e) => setUseModel(e.target.value)}
+          required
+        >
+          <option value="">Please select function</option>{" "}
+          {/* <- default/disabled */}
+          <option value="model">Model (AI Prediction)</option>
+          <option value="algorithm">Algorithmic Detection</option>
+        </select>
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Analyzing..." : "Detect Trend"}
+        </button>
+      </form>
+    </div>
   );
 }
 

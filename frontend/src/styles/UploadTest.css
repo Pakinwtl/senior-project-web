@@ -1,0 +1,18 @@
+/* styles/UploadTest.css */
+.upload-container {
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  max-width: 500px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.upload-container input,
+.upload-container select,
+.upload-container button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}

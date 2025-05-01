@@ -1,6 +1,7 @@
 // src/components/TrendChart.jsx
 import React from "react";
 import { Line } from "react-chartjs-2";
+import "../styles/TrendChart.css"; // Assuming you have some CSS for styling
 import {
   Chart as ChartJS,
   LineElement,
@@ -23,15 +24,20 @@ ChartJS.register(
 );
 
 function TrendChart({ trend }) {
-  if (!trend) return null;
-  console.log("Trend data:", trend);
+  if (!trend) {
+    return (
+      <div className="trend-chart">
+        <p style={{ color: "#888" }}>📈 Select a trend to see details</p>
+      </div>
+    );
+  }
 
   const data = {
-    labels: trend.wavelengths,
+    labels: trend.concentrations,
     datasets: [
       {
-        label: "Transmittance",
-        data: trend.transmittance,
+        label: "Wavelength",
+        data: trend.wavelengths,
         fill: false,
         borderColor: "blue",
         tension: 0.3,
@@ -49,7 +55,11 @@ function TrendChart({ trend }) {
     },
   };
 
-  return <Line data={data} options={options} />;
+  return (
+    <div className="trend-chart">
+      <Line data={data} options={options} />;
+    </div>
+  );
 }
 
 export default TrendChart;

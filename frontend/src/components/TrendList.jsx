@@ -1,5 +1,6 @@
 // src/components/TrendList.jsx
 import React from "react";
+import "../styles/TrendList.css"; // Assuming you have some CSS for styling
 
 function TrendList({ trends, onSelect }) {
   return (

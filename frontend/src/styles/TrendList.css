@@ -1,0 +1,24 @@
+/* styles/TrendList.css */
+.trend-list {
+  padding: 15px;
+  border: 1px solid #ccc;
+  margin: 20px;
+  background: white;
+  border-radius: 6px;
+}
+
+.trend-list ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.trend-list li {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.trend-list li:hover {
+  background: #f0f0f0;
+}
