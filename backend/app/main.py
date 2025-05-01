@@ -1,9 +1,8 @@
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.services.model_detector import ModelTrendDetector
-from app.services.algorithm_detector import AlgorithmsTrendDetector 
-from pydantic import BaseModel
+from app.services.algorithm_detector import AlgorithmsTrendDetector
 import tempfile
 import uvicorn
 import os
@@ -11,54 +10,59 @@ import shutil
 
 app = FastAPI()
 
-AlgorithmsTrendDetector = AlgorithmsTrendDetector()
+# Instantiate detectors
+model_detector = ModelTrendDetector()
+algorithm_detector = AlgorithmsTrendDetector()
 
-origin = [
+# Allow frontend access
+origins = [
     "http://localhost:3000"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origin,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
-
-
+    return {"message": "Trend Detection API is running"}
 
 @app.post("/detect-trend/")
-async def detect_trend(file: UploadFile = File(...), use_model: bool = Form(False)):
+async def detect_trend(
+    file: UploadFile = File(...),
+    use_model: str = Form(...)
+):
+    # Validate use_model
+    if use_model not in ["model", "algorithm"]:
+        raise HTTPException(status_code=400, detail="Invalid method. Please select 'model' or 'algorithm'.")
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as temp_file:
+
+    # Save uploaded file temporarily
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".xlsx") as temp_file:
         shutil.copyfileobj(file.file, temp_file)
         temp_file_path = temp_file.name
 
     try:
-        if use_model:
-            results = ModelTrendDetector.detect(temp_file_path)
-        else:
-            results = AlgorithmsTrendDetector.detect(temp_file_path)
-
-        valid_results = [result for result in results if result["predicted_label"] == 1]
+        if use_model == "model":
+            results = model_detector.detect(temp_file_path)
+        if use_model == "algorithm":
+            results = algorithm_detector.detect(temp_file_path)
 
         return JSONResponse(content={
             "success": True,
-            "results": valid_results
+            "results": results
         })
-    
+
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
     finally:
-        os.remove(temp_file_path)  # Clean up temp file
+        os.remove(temp_file_path)
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1 ", port=8000, reload=True)
-
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

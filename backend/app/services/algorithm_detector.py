@@ -13,22 +13,25 @@ class AlgorithmsTrendDetector(TrendDetector):
 
         for i in range(trans_arr.shape[0] - WINDOW_SIZE + 1):
             window = trans_arr[i:i + WINDOW_SIZE]
-            min_vals = np.min(window, axis=0)[::-1]
+            min_vals = np.min(window, axis=0)
             min_idx = np.argmin(window, axis=0)
+            min_wv = wavelength[i + min_idx].to_numpy()
 
-            if np.any(min_idx == 0) or np.any(min_idx == WINDOW_SIZE - 1):
+            min_vals = min_vals[::-1]
+            min_wv = min_wv[::-1]
+
+            if np.any(min_idx == 0) or np.any(min_idx == WINDOW_SIZE - 1) or not np.all(np.diff(min_vals) < 0):
                 continue
 
-            min_wv_idx = np.array([i + idx for idx in min_idx])[::-1]
-            min_wv = wavelength[min_wv_idx].to_numpy()
             _, _, r, _, _ = linregress(CONCENTRATIONS, min_wv)
 
-            label = 1 if abs(r) >= 0.8 and np.all(np.diff(min_vals) < 0) else 0
+            label = 1 if abs(r) >= 0.8 else 0  
+
             if label == 0:
-                continue    
+                continue
 
             window_wv = min_wv.tolist()
-            window_trans = [window[idx, col] for col, idx in enumerate(min_idx[::-1])]
+            window_trans = min_vals.tolist()
 
             if is_duplicate(window_wv, window_trans, results):
                 continue
@@ -38,7 +41,8 @@ class AlgorithmsTrendDetector(TrendDetector):
                 "predicted_label": label,
                 "wavelengths": window_wv,
                 "transmittance": window_trans,
-                "r_value": abs(r)
+                "r_value": abs(r),
+                "concentrations": CONCENTRATIONS.tolist()
             })
 
         return results
