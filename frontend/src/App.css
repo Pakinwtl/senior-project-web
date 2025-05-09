@@ -1,58 +1,24 @@
-/* src/App.css */
-
-body {
-  margin: 0;
-  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
-  color: #2d3748;
-  line-height: 1.6;
-}
-
+/* App.css */
 .App {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 20px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(to bottom right, #fffafa, #fdf0f0);
+  min-height: 100vh;
 }
 
 .App h1 {
-  font-size: 2.2rem;
-  text-align: center;
-  margin-bottom: 40px;
-  color: #1a202c;
-  font-weight: 600;
-  letter-spacing: -0.5px;
+  font-size: 2rem;
+  color: #800000;
+  margin-bottom: 30px;
 }
 
 .layout {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 20px;
-  align-items: flex-start;
-}
-
-.trend-list {
-  flex: 1;
-  max-width: 300px;
-  background-color: #f9f9f9;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-.trend-chart {
-  flex: 3;
-  background-color: #fff;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  min-height: 300px;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-  .layout {
-    flex-direction: column;
-  }
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }

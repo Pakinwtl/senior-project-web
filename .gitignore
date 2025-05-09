@@ -1,1 +1,4 @@
 .DS_Store
+backend/app/8min.xlsx
+backend/app/__pycache__/main.cpython-310.pyc
+*.pyc

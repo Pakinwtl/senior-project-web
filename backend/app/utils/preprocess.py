@@ -1,11 +1,20 @@
 import pandas as pd
 import numpy as np
+from fastapi.responses import JSONResponse
 from statsmodels.nonparametric.smoothers_lowess import lowess
 from app.utils.constants import SMOOTH_FRAC
+from app.utils.validate_excel import validate_excel_format
 
 def preprocessing(file):
     # Read the CSV file%
     df = pd.read_excel(file)
+
+    # Validate the format of the DataFrame
+    errors = validate_excel_format(df)
+    if errors:
+        return JSONResponse(status_code=400, content={"errors": errors})
+   
+
     df = df[(df.iloc[:, 0] > 450 ) & (df.iloc[:, 0] < 950)]
     wavelength = df.iloc[:, 0].reset_index(drop=True)
     air_ref = df.iloc[:, 1].reset_index(drop=True)

@@ -50,7 +50,7 @@ function TrendChart({ trend }) {
     plugins: {
       title: {
         display: true,
-        text: `Trend Sample ${trend.sample_index}`,
+        text: `Trend Sample`,
       },
     },
   };
