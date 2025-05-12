@@ -20,4 +20,4 @@ tzdata==2025.2
 uvicorn
 fastapi
 openpyxl
-statemodels
+statsmodels
