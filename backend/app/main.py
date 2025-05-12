@@ -16,7 +16,7 @@ algorithm_detector = AlgorithmsTrendDetector()
 
 # Allow frontend access
 origins = [
-    "http://localhost:3000"
+    "https://senior-project-website.onrender.com/"
 ]
 
 app.add_middleware(
