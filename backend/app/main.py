@@ -16,7 +16,7 @@ algorithm_detector = AlgorithmsTrendDetector()
 
 # Allow frontend access
 origins = [
-    "https://senior-project-website.onrender.com/"
+    "https://senior-project-website.onrender.com"
 ]
 
 app.add_middleware(
@@ -26,6 +26,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.get("/")
 async def root():
