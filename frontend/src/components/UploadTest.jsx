@@ -22,7 +22,7 @@ function UploadTest({ onResults }) {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/detect-trend",
+        "https://senior-project-web.onrender.com/detect-trend/",
         formData
       );
       console.log("API response:", response.data);
