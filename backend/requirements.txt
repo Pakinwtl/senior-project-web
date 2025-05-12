@@ -21,3 +21,4 @@ uvicorn
 fastapi
 openpyxl
 statsmodels
+python-multipart
