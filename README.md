@@ -34,19 +34,6 @@ Although deep learning (CNN, LSTM) was initially considered, it was ruled out du
 - Low complexity of the trend pattern
 - Excellent performance already achieved by SVM
 
-## Project Structure
-
-backend/
-└── app/
-├── main.py
-├── services/
-├── utils/
-└── models/
-frontend/
-└── src/
-├── components/
-├── App.jsx
-├── styles/
 
 ## Technologies Used
 
